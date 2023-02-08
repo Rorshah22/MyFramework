@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteCond %{SCRIPT_FILE} !-d
+RewriteCond %{SCRIPT_FILE} !-d
+
+RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
