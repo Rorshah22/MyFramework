@@ -1,31 +1,31 @@
 <?php
+
 spl_autoload_register(function (string $className) {
     $className = '/../src/' . str_ireplace('\\', '/', $className) . '.php';
     require_once __DIR__ . $className;
 });
 
-$route = $_GET['route'];
-
-$isControllerFound = false;
-
+$route = $_GET['route'] ?? '';
 $routes = require_once __DIR__ . '/../src/MyProject/routes.php';
-foreach ($routes as $pattern => $controllerAction) {
+
+$isRouteFound = false;
+foreach ($routes as $pattern => $controllerAndAction) {
     preg_match($pattern, $route, $matches);
     if (!empty($matches)) {
-        $isControllerFound = true;
+        $isRouteFound = true;
         break;
     }
 }
 
-
-if (!$isControllerFound) {
-    echo 'Not Found';
+if (!$isRouteFound) {
+    echo 'Страница не найдена!';
     return;
 }
-unset($matches[0]);
-$controllerName = $controllerAction[0];
-$action = $controllerAction[1];
 
+unset($matches[0]);
+
+$controllerName = $controllerAndAction[0];
+$actionName = $controllerAndAction[1];
 $controller = new $controllerName();
-$controller->$action(...$matches);
+$controller->$actionName(...$matches);
 
