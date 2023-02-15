@@ -2,8 +2,8 @@
 
 return [
     'db' =>[
-        'host' => 'localhost',
-        'dbname' => 'mysql',
+        'host' => '172.16.238.12',
+        'dbname' => 'my_project',
         'user' => 'root',
         'password' => ''
     ]

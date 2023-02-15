@@ -7,7 +7,7 @@ class Db
     private $pdo;
     private static $instance;
 
-    public function __construct()
+    private function __construct()
     {
         $dbOptions = (require __DIR__ . '/../settings.php')['db'];
         $this->pdo = new \PDO(
@@ -21,8 +21,9 @@ class Db
     public static function getInstance(): self
     {
         if (self::$instance === null) {
-            return self::$instance = new static();
+            return self::$instance = new self();
         }
+        return self::$instance;
     }
 
     public function query(string $sql, array $params = []): ?array
@@ -34,6 +35,4 @@ class Db
         }
         return $sth->fetchAll();
     }
-
-
 }

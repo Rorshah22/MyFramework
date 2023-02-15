@@ -14,14 +14,14 @@ class MainController
     public function __construct()
     {
         $this->view = new View(__DIR__.'/../../../templates');
-        $this->db = new Db();
+        $this->db = Db::getInstance();
     }
 
     public function main()
     {
         $articles  = $this->db->query('SELECT * FROM `articles`');
         $this->view->renderHtml('main/main.php', ['articles' => $articles]);
-            var_dump($articles);
+
     }
 
     public function sayHello(string $name)

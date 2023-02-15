@@ -14,9 +14,10 @@ class View
         $this->templatesPath = $templatesPath;
     }
 
-    public function renderHtml(string $templateName, array $vars = []): void
+    public function renderHtml(string $templateName, array $vars = [], int $code=200): void
     {
         extract($vars);
+        http_response_code($code);
 
         ob_start();
         include $this->templatesPath . '/' . $templateName;
