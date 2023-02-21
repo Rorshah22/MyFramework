@@ -2,28 +2,55 @@
 
 namespace MyProject\Controllers;
 
+use MyProject\Exceptions\NotFoundException;
+use MyProject\Models\Articles\Article;
+use MyProject\Models\Users\User;
 use MyProject\View\View;
-use MyProject\Services\Db;
 
 class ArticlesController
 {
     private $view;
-    private $db;
 
     public function __construct()
     {
         $this->view = new View(__DIR__.'/../../../templates');
-        $this->db = Db::getInstance();
     }
     public function view(int $articleId):void
     {
-        $result = $this->db->query('SELECT * FROM `articles` INNER JOIN `users` ON `articles`.author_id=`users`.id WHERE `articles`.id=:id; ',
-            [':id'=>$articleId]
-        );
-        if ($result === []) {
-            $this->view->renderHtml('errors/404.php',[], 404);
-            return;
+        $article = Article::getByID($articleId);
+        if ($article === null) {
+            throw new NotFoundException();
         }
-        $this->view->renderHtml('articles/view.php', ['article' => $result[0]]);
+
+        $this->view->renderHtml('articles/view.php', ['article' => $article]);
+    }
+    public function edit(int $articleId):void
+    {
+        $article = Article::getByID($articleId);
+
+        if ($article === null){
+            throw new NotFoundException();
+        }
+        $article->setName('Новое название');
+        $article->setText('Новый текст');
+        $article->save();
+    }
+    public function add():void
+    {
+        $author = User::getByID(1);
+
+        $article = new Article();
+        $article->setName('Добавленная статья');
+        $article->setText('Текст добавленной статьи');
+        $article->setAuthorId($author);
+
+        $article->save();
+
+        var_dump($article);
+    }
+    public function delete(int $articleId):void
+    {
+        $article = Article::getByID($articleId);
+        $article->delete();
     }
 }

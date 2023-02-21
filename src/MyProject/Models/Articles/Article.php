@@ -2,7 +2,9 @@
 
 namespace MyProject\Models\Articles;
 
+use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
+use MyProject\Services\Db;
 
 /**
  * @property int $id
@@ -13,109 +15,53 @@ use MyProject\Models\Users\User;
  *
  *
  */
-class Article
+class Article extends ActiveRecordEntity
 {
-    private $id;
-    private $authorId;
-    private $name;
-    private $text;
-    private $createdAt;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $authorId;
+    protected $name;
+    protected $text;
 
-    /**
-     * @return int
-     */
-    public function getAutorId(): int
-    {
-        return $this->autorId;
-    }
+    protected $createdAt;
 
-    /**
-     * @param int $autorId
-     */
-    public function setAutorId(int $autorId): void
-    {
-        $this->autorId = $autorId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthorId()
-    {
-        return $this->authorId;
-    }
-
-    /**
-     * @param mixed $authorId
-     */
-    public function setAuthorId($authorId): void
-    {
-        $this->authorId = $authorId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param mixed $createdAt
-     */
-    public function setCreatedAt($createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-
-
-    /**
-     * @return string
-     */
     public function getText(): string
     {
         return $this->text;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function setText(string $text): void
     {
-        return $this->title;
+        $this->text = $text;
     }
 
-    /**
-     * @return User
-     */
+    public function getAuthorId(): string
+    {
+        return (int)$this->authorId;
+    }
+
+    public function setAuthorId(User $author): void
+    {
+        $this->authorId = $author->getId();
+    }
+
     public function getAuthor(): User
     {
-        return $this->author;
+        return User::getByID($this->authorId);
     }
+
+    protected static function getTableName(): string
+    {
+        return 'articles';
+    }
+
 }
