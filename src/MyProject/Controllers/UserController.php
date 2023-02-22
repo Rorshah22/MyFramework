@@ -6,20 +6,12 @@ use MyProject\Exceptions\ActivateException;
 use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\Users\User;
 use MyProject\Models\Users\UserActivationService;
+use MyProject\Models\Users\UsersAuthService;
 use MyProject\Services\EmailSender;
-use MyProject\View\View;
 
-class UserController
+class UserController extends AbstractController
 {
-    /**@var View */
-    private $view;
-
-    public function __construct()
-    {
-        $this->view = new View(__DIR__ . '/../../../templates');
-    }
-
-    public function signUp()
+    public function signUp():void
     {
         if (!empty($_POST)) {
             try {
@@ -43,11 +35,10 @@ class UserController
         $this->view->renderHtml('users/signUp.php');
 
     }
-
-    public function activate(int $userId, string $activationCode)
+    public function activate(int $userId, string $activationCode):void
     {
 
-        try{
+        try {
             $user = User::getByID($userId);
             if ($user === null) {
                 throw new InvalidArgumentException('Нет такого пользователя');
@@ -61,15 +52,35 @@ class UserController
                 $user->activate();
                 $this->view->renderHtml('');
             }
-            if(!$isCodeValid){
+            if (!$isCodeValid) {
                 throw new InvalidArgumentException('Неверный код');
             }
 
 
-        }catch (InvalidArgumentException $e){
-            $this->view->renderHtml('users/signUp.php',['error'=>$e->getMessage()]);
-        }catch (ActivateException $e){
-            $this->view->renderHtml('users/signUp.php',['error'=>$e->getMessage()]);
+        } catch (InvalidArgumentException $e) {
+            $this->view->renderHtml('users/signUp.php', ['error' => $e->getMessage()]);
+        } catch (ActivateException $e) {
+            $this->view->renderHtml('users/signUp.php', ['error' => $e->getMessage()]);
         }
+    }
+    public function login():void
+    {
+        if (!empty($_POST)){
+            try {
+                $user = User::login($_POST);
+                UsersAuthService::createToken($user);
+                header('Location: /');
+                exit();
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('users/login.php', ['error' => $e->getMessage()]);
+                return;
+            }
+        }
+        $this->view->renderHtml('users/login.php');
+    }
+    public function logout():void
+    {
+        User::logout();
+        header('Location: /');
     }
 }

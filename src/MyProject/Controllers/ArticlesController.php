@@ -7,35 +7,28 @@ use MyProject\Models\Articles\Article;
 use MyProject\Models\Users\User;
 use MyProject\View\View;
 
-class ArticlesController
+class ArticlesController extends AbstractController
 {
-    private $view;
-
-    public function __construct()
-    {
-        $this->view = new View(__DIR__.'/../../../templates');
-    }
-    public function view(int $articleId):void
+    public function view(int $articleId): void
     {
         $article = Article::getByID($articleId);
         if ($article === null) {
             throw new NotFoundException();
         }
-
         $this->view->renderHtml('articles/view.php', ['article' => $article]);
     }
-    public function edit(int $articleId):void
+    public function edit(int $articleId): void
     {
         $article = Article::getByID($articleId);
 
-        if ($article === null){
+        if ($article === null) {
             throw new NotFoundException();
         }
         $article->setName('Новое название');
         $article->setText('Новый текст');
         $article->save();
     }
-    public function add():void
+    public function add(): void
     {
         $author = User::getByID(1);
 
@@ -48,7 +41,7 @@ class ArticlesController
 
         var_dump($article);
     }
-    public function delete(int $articleId):void
+    public function delete(int $articleId): void
     {
         $article = Article::getByID($articleId);
         $article->delete();

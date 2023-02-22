@@ -1,14 +1,19 @@
 <?php
 
+use MyProject\Controllers\MainController;
+use MyProject\Controllers\ArticlesController;
+use MyProject\Controllers\UserController;
+
+
 return [
-
-    '~^hello/(.*)$~' => [\MyProject\Controllers\MainController::class, 'sayHello'],
-    '~^$~' => [\MyProject\Controllers\MainController::class, 'main'],
-    '~^articles/(\d+)$~' => [\MyProject\Controllers\ArticlesController::class, 'view'],
-    '~^articles/(\d+)/edit$~' => [\MyProject\Controllers\ArticlesController::class, 'edit'],
-    '~^articles/add~' =>[\MyProject\Controllers\ArticlesController::class, 'add'],
-    '~^articles/(\d+)/delete~' =>[\MyProject\Controllers\ArticlesController::class, 'delete'],
-    '~^users/register$~' => [\MyProject\Controllers\UserController::class, 'signUp'],
-    '~^users/(\d+)/activate/(.+)$~' => [\MyProject\Controllers\UserController::class, 'activate']
-
+    '~^hello/(.*)$~' => [MainController::class, 'sayHello'],
+    '~^$~' => [MainController::class, 'main'],
+    '~^articles/(\d+)$~' => [ArticlesController::class, 'view'],
+    '~^articles/(\d+)/edit$~' => [ArticlesController::class, 'edit'],
+    '~^articles/add~' =>[ArticlesController::class, 'add'],
+    '~^articles/(\d+)/delete~' =>[ArticlesController::class, 'delete'],
+    '~^users/register$~' => [UserController::class, 'signUp'],
+    '~^users/(\d+)/activate/(.+)$~' => [UserController::class, 'activate'],
+    '~^users/login$~' => [UserController::class, 'login'],
+    '~^users/logout$~' => [UserController::class, 'logout']
 ];
