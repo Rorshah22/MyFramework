@@ -31,6 +31,22 @@ class User extends ActiveRecordEntity
         return $this->email;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getPasswordHash()
+    {
+        return $this->passwordHash;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthToken()
+    {
+        return $this->authToken;
+    }
+
     public static function signUp(array $userData): User
     {
         if (empty($userData['nickname'])) {
@@ -72,14 +88,58 @@ class User extends ActiveRecordEntity
 
         return $user;
     }
-    public function activate(){
+
+    public function activate()
+    {
         $this->isConfirmed = true;
         $this->save();
     }
 
-    public function isConfirmed(){
+    /**
+     * @param array $userData
+     * @return User
+     * @throws InvalidArgumentException
+     * @var User|null $user
+     */
+    public static function login(array $userData): User
+    {
+        if (empty($userData['email'])) {
+            throw new InvalidArgumentException('Не введен email');
+        }
+        if (empty($userData['password'])) {
+            throw new InvalidArgumentException('Не передан пароль');
+        }
+        $user = User::findOneByColumn('email', $userData['email']);
+        if ($user === null) {
+            throw new InvalidArgumentException('Нет пользователя с таким email');
+        }
+        if (!password_verify($userData['password'], $user->getPasswordHash())) {
+            throw new InvalidArgumentException('Неверный пароль');
+        }
+        if (!$user->isConfirmed()) {
+            throw new InvalidArgumentException('Пользователь не подтвержден');
+        }
+
+        $user->refreshAuthToken();
+        $user->save();
+        return $user;
+    }
+
+    public function refreshAuthToken()
+    {
+        $this->authToken = sha1(random_bytes(100)) . sha1(random_bytes(100));
+    }
+
+    public static function logout(): void
+    {
+        setcookie('token', '', 0, '/');
+    }
+
+    public function isConfirmed()
+    {
         return $this->isConfirmed;
     }
+
     protected static function getTableName(): string
     {
         return 'users';
