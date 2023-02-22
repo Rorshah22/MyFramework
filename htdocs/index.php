@@ -1,5 +1,7 @@
 <?php
 
+use MyProject\Exceptions\Forbidden;
+
 spl_autoload_register(function (string $className) {
     $className = '/../src/' . str_ireplace('\\', '/', $className) . '.php';
     require_once __DIR__ . $className;
@@ -36,4 +38,10 @@ $controller->$actionName(...$matches);
 }catch (\MyProject\Exceptions\NotFoundException $e){
     $view = new \MyProject\View\View(__DIR__.'/../templates/errors');
     $view->renderHtml('404.php',['error' => $e->getMessage()], 404);
+}catch (\MyProject\Exceptions\UnauthorizedException $e){
+    $view = new \MyProject\View\View(__DIR__.'/../templates/errors' );
+    $view->renderHtml('401.php', ['error' => $e->getMessage()],401);
+}catch (Forbidden $e){
+    $view = new \MyProject\View\View(__DIR__.'/../templates/errors' );
+    $view->renderHtml('403.php', ['error' => $e->getMessage(), 'user'=> \MyProject\Models\Users\UsersAuthService::getUserByToken()],403);
 }
