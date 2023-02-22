@@ -124,6 +124,10 @@ class User extends ActiveRecordEntity
         $user->save();
         return $user;
     }
+    public function isAdmin():bool
+    {
+        return $this->role === 'admin';
+    }
 
     public function refreshAuthToken()
     {

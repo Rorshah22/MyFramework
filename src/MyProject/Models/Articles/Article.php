@@ -2,6 +2,7 @@
 
 namespace MyProject\Models\Articles;
 
+use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
 use MyProject\Services\Db;
@@ -17,11 +18,9 @@ use MyProject\Services\Db;
  */
 class Article extends ActiveRecordEntity
 {
-
     protected $authorId;
     protected $name;
     protected $text;
-
     protected $createdAt;
 
     public function getName(): string
@@ -57,6 +56,23 @@ class Article extends ActiveRecordEntity
     public function getAuthor(): User
     {
         return User::getByID($this->authorId);
+    }
+
+    public static function createFromArray(array $fields, User $author): Article
+    {
+        if (empty($fields['name'])) {
+            throw new InvalidArgumentException('Не передано название статьи');
+        }
+
+        if (empty($fields['text'])) {
+            throw new InvalidArgumentException('Не передан текст статьи');
+        }
+        $article = new Article();
+        $article->setName($fields['name']);
+        $article->setText($fields['text']);
+        $article->setAuthorId($author);
+        $article->save();
+        return $article;
     }
 
     protected static function getTableName(): string
