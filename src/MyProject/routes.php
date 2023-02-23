@@ -6,7 +6,6 @@ use MyProject\Controllers\UserController;
 
 
 return [
-    '~^hello/(.*)$~' => [MainController::class, 'sayHello'],
     '~^$~' => [MainController::class, 'main'],
     '~^articles/(\d+)$~' => [ArticlesController::class, 'view'],
     '~^articles/(\d+)/edit$~' => [ArticlesController::class, 'edit'],

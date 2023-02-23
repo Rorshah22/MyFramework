@@ -18,6 +18,7 @@ class ArticlesController extends AbstractController
         }
         $this->view->renderHtml('articles/view.php', ['article' => $article]);
     }
+
     public function edit(int $articleId): void
     {
         $article = Article::getByID($articleId);
@@ -25,16 +26,31 @@ class ArticlesController extends AbstractController
         if ($article === null) {
             throw new NotFoundException();
         }
-        $article->setName('Новое название');
-        $article->setText('Новый текст');
-        $article->save();
-    }
-    public function add(): void
-    {
         if ($this->user === null){
             throw new UnauthorizedException();
         }
-        if ($this->user->isAdmin()){
+        if (!empty($_POST)){
+
+        try{
+            $article->updateFromArray($_POST);
+        }catch (InvalidArgumentException $e){
+            $this->view->renderHtml('articles/edit.php', ['error' => $e->getMessage(), 'article' => $article]);
+            return;
+        }
+        header('Location: /articles/'.$article->getId(), true, 302);
+        exit();
+        }
+        $this->view->renderHtml('articles/edit.php', ['article' => $article]);
+
+    }
+
+    public function add(): void
+    {
+        if ($this->user === null) {
+            throw new UnauthorizedException();
+        }
+
+        if (!$this->user->isAdmin()) {
             throw new Forbidden('Создать статью может только админ');
         }
         if (!empty($_POST)) {
@@ -50,6 +66,7 @@ class ArticlesController extends AbstractController
         }
         $this->view->renderHtml('articles/add.php');
     }
+
     public function delete(int $articleId): void
     {
         $article = Article::getByID($articleId);
