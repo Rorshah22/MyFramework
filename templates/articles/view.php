@@ -2,6 +2,7 @@
 /**
  * @var MyProject\Models\Articles\Article $article ;
  * @var MyProject\Models\Users\User $user ;
+ * @var MyProject\Models\Comments\Comment[]  $comments
  * @var MyProject\Models\Comments\Comment $comment;
  */
 include __DIR__ . '/../header.php' ?>

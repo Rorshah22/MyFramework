@@ -25,7 +25,6 @@ class View
         extract($vars);
         extract($this->extraVars);
         http_response_code($code);
-
         ob_start();
         include $this->templatesPath . '/' . $templateName;
         $buffer = ob_get_contents();
