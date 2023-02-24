@@ -7,8 +7,6 @@ use MyProject\Services\Db;
 abstract class ActiveRecordEntity
 {
     protected $id;
-
-
     /**
      * @return mixed
      */
