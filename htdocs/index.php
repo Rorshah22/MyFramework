@@ -37,7 +37,7 @@ $controller->$actionName(...$matches);
        echo $e->getMessage();
 }catch (\MyProject\Exceptions\NotFoundException $e){
     $view = new \MyProject\View\View(__DIR__.'/../templates/errors');
-    $view->renderHtml('404.php',['error' => $e->getMessage()], 404);
+    $view->renderHtml('404.php',['error' => $e->getMessage(),'user'=> \MyProject\Models\Users\UsersAuthService::getUserByToken()],404);
 }catch (\MyProject\Exceptions\UnauthorizedException $e){
     $view = new \MyProject\View\View(__DIR__.'/../templates/errors' );
     $view->renderHtml('401.php', ['error' => $e->getMessage()],401);
