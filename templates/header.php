@@ -3,27 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Мой блог</title>
+    <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
-
-<table class="layout">
-    <tr>
-        <td colspan="2" class="header">
-            Мой блог
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2" class="header" style="text-align: right">
-            <?php if (!empty($user)): ?>
-                Привет <?= $user->getNickname() ?>
-                <a href="/users/logout">Выйти</a>
-            <?php else: ?>
-                <a href="/users/login">Войти</a>
-                <span>|</span>
-                <a href="/users/register">Регистрация</a>
-            <?php endif; ?>
-        </td>
-    </tr>
-    <tr>
-        <td>
+<body class="body">
+    <header class="header">
+        <h1 class="header_h1">Мой блог</h1>
+        <nav >
+            <ul class="nav">
+                <li><a href="/">Главная</a></li>
+                <li><a href="">Новости</a></li>
+                <li><a href="">Категории</a></li>
+                <li><a href="">Контакты</a></li>
+                <li><a href="/admin">Админка</a></li>
+                <li><a href="">Профиль</a></li>
+                <li><?php if (!empty($user)): ?>
+                    Привет <?= $user->getNickname() ?>
+                    <a href="/users/logout">Выйти</a>
+                <?php else: ?>
+                    <a href="/users/login">Войти</a>
+                    <span>|</span>
+                    <a href="/users/register">Регистрация</a>
+                <?php endif; ?>
+                </li>
+            </ul>
+        </nav>
+    </header>
+<main class="main">
