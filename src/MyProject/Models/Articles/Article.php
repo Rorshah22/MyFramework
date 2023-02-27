@@ -23,6 +23,14 @@ class Article extends ActiveRecordEntity
     protected $text;
     protected $createdAt;
 
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
     public function getName(): string
     {
         return $this->name;

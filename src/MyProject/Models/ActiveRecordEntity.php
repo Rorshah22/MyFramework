@@ -7,6 +7,7 @@ use MyProject\Services\Db;
 abstract class ActiveRecordEntity
 {
     protected $id;
+
     /**
      * @return mixed
      */
@@ -41,6 +42,15 @@ abstract class ActiveRecordEntity
         $db = Db::getInstance();
         return $db->query(
             'SELECT* FROM `' . static::getTableName() . '`;',
+            [],
+            static::class);
+    }
+
+    public static function findLastRecords($limit = 10,$orderId = 'ASC' ): array
+    {
+        $db = DB::getInstance();
+
+        return $db->query('SELECT * FROM `' . static::getTableName() .'` ORDER BY id '.$orderId. ' LIMIT ' . $limit,
             [],
             static::class);
     }
@@ -135,7 +145,7 @@ abstract class ActiveRecordEntity
         $result = $db->query('SELECT * FROM `' . static::getTableName() . '` WHERE ' . $columnName . '= :value',
             [':value' => $value],
             static::class);
-        if ($result === []){
+        if ($result === []) {
             return null;
         }
         return $result[0];
