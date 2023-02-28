@@ -37,7 +37,7 @@ include __DIR__ . '/../header.php' ?>
 <div id="comment<?= $comment->getId()?>">
     <p ><?= $comment->getUser()->getNickname()?></p>
     <p><?= $comment->getComment()?> </p>
-    <span><?= $comment->getCreatedAt()?></span>
+    <span><?= $comment->getCreatedAt('m.d.y H:i')?></span>
     <?php if ($user !== null && ($user->isAdmin() || $user->getId() === $comment->getUser()->getId())):?>
         <p><a href="/comments/<?= $comment->getId() ?>/edit">Редактировать</a></p>
     <?php endif; ?>

@@ -16,10 +16,10 @@
                 <li><a href="">Категории</a></li>
                 <li><a href="">Контакты</a></li>
                 <li><a href="/admin">Админка</a></li>
-                <li><a href="">Профиль</a></li>
                 <li><?php if (!empty($user)): ?>
-                    Привет <?= $user->getNickname() ?>
-                    <a href="/users/logout">Выйти</a>
+                        <a href=""><?= $user->getNickname() ?></a>
+                        <span>|</span>
+                        <a href="/users/logout">Выйти</a>
                 <?php else: ?>
                     <a href="/users/login">Войти</a>
                     <span>|</span>

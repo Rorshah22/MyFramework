@@ -8,7 +8,8 @@
     <div>
         <h2><?= $article->getName() ?></h2>
         <p><?= mb_substr(htmlentities($article->getText()), 0,100) ?></p>
-        <p>Дата: <?=$article->getCreatedAt()?></p>
+
+        <p>Дата: <?=$article->getCreatedAt('m.d.y H:i')?></p>
         <hr>
     </div>
 <?php endforeach; ?>

@@ -10,7 +10,7 @@ class Comment extends ActiveRecordEntity
     protected  $userId;
     protected  $articleId;
     protected  $comment;
-    protected  $createdAt;
+
     /**
      * @return User
      */
@@ -47,13 +47,6 @@ class Comment extends ActiveRecordEntity
     public function setComment(string $comment): void
     {
         $this->comment = $comment;
-    }
-    /**
-     * @return string
-     */
-    public function getCreatedAt(): string
-    {
-        return $this->createdAt;
     }
 
     public static function addComment(array $fields, User $user):Comment

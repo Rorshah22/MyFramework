@@ -9,6 +9,7 @@ html{
     margin: 0   auto;
     background: rgba(0, 0, 0, 0.4);
     border-radius: 0px;
+    font-family: 'Montserrat', sans-serif;
 }
 .layout {
     width: 100%;
@@ -29,7 +30,7 @@ html{
     display: flex;
     flex-direction: column;
     padding: 60px 0 40px;
-    font-family: 'Montserrat', sans-serif;
+
 }
 
 .footer {
@@ -69,18 +70,26 @@ a, a:visited {
     font-weight: 400;
     font-size: 14px;
     line-height: 14px;
-    /* identical to box height, or 127% */
-
     letter-spacing: 1.3px;
     text-transform: uppercase;
-
     color: #FFFFFF;
+}
+.nav,li > a:hover{
+    color: black;
+ }
+nav,li > a:hover::before{
+    display: inline-block;
+    content: '';
 }
 .main{
     max-width: 800px;
     margin: 0 auto;
     padding: 20px 0 0 0;
 }
+img {
+    vertical-align: middle;
+}
+
 .footer{
     padding: 20px;
     background-color: #000;
@@ -98,22 +107,98 @@ a, a:visited {
 .preview > figure{
     padding: 20px;
 }
-.card > h2{
+.card{
+    display: flex;
+    flex-direction: column;
+}
+.card-img{
+    position: relative;
+}
+.card-image-background{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+}
+.card-theme{
+    display: inline-block;
     position: absolute;
+    top: 30px;
+    right: 30px;
+    color: #FFFFFF;
+    z-index: 2;
+}
+.card-theme::before{
+   content: '';
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: -14px;
+    width: 84px;
+    height: 36px;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.2);
+    z-index: -1;
+}
+.card-h2{
+    display: inline-block;
+    position: absolute;
+    top: 72%;
+    left: 10%;
+    font-weight: lighter;
+    font-size: 36px;
+    color: #FFFFFF;
+}
+.profile-data{
+    display: flex;
+    position: absolute;
+    font-weight: lighter;
+    top: 50%;
+    left: 10%;
+    color: #FFFFFF;
+}
+.profile-data-info{
+    margin: 0 0 0 20px;
+}
+.profile-data-info p{
+    padding: 0 0 5px;
 }
 .card-text{
     background-color: #FFFFFF;
-    /*margin: 0;*/
-    /*height: 180px;*/
-    padding: 35px 60px 65px;
+    padding: 35px 60px ;
 }
-.read_more{
-    color: #333333;
 
+.card-text a{
+    display: inline-block;
+    padding: 15px 0 0;
+    color: #7f11e7;
+}
+.card-edit{
+    position: relative;
+}
+.card-edit-a{
+    position: absolute;
+    right: 26px;
+    top: -52px;
+    color: #fff;
+    background-color: rgba(19, 70, 16, 0.8);
+    padding: 15px 20px;
+    border-radius: 10px;
+}
+.card-edit-a:hover{
+    box-shadow: 0 0 5px rgb(19, 70, 16);
+
+}
+
+.read_more{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #333333;
+    margin-bottom: 70px;
     /*width: 800px;*/
     height: 210px;
     background: #F1F1F1;
-    border-radius: 0px;
+    border-radius: 0;
 }
 .read_more > h3{
     padding: 50px;

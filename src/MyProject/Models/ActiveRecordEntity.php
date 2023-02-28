@@ -7,6 +7,7 @@ use MyProject\Services\Db;
 abstract class ActiveRecordEntity
 {
     protected $id;
+    protected $createdAt;
 
     /**
      * @return mixed
@@ -46,11 +47,11 @@ abstract class ActiveRecordEntity
             static::class);
     }
 
-    public static function findLastRecords($limit = 10,$orderId = 'ASC' ): array
+    public static function findLastRecords($limit = 10, $orderId = 'ASC'): array
     {
         $db = DB::getInstance();
 
-        return $db->query('SELECT * FROM `' . static::getTableName() .'` ORDER BY id '.$orderId. ' LIMIT ' . $limit,
+        return $db->query('SELECT * FROM `' . static::getTableName() . '` ORDER BY id ' . $orderId . ' LIMIT ' . $limit,
             [],
             static::class);
     }
@@ -149,6 +150,36 @@ abstract class ActiveRecordEntity
             return null;
         }
         return $result[0];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt(string $format = 'M d, Y')
+    {
+        $date = new \DateTimeImmutable($this->createdAt);
+        return $this->formatDate($date->format($format));
+    }
+
+    private function formatDate($date): string
+    {
+        $monthsList = array(
+            "Jan" => "Январь",
+            "Feb" => "Февраль",
+            "Mar" => "Март",
+            "Apr" => "Апрель",
+            "May" => "Мая",
+            "Jun" => "Июнь",
+            "Jul" => "Июль",
+            "Aug" => "Август",
+            "Sep" => "Сентябрь",
+            "Oct" => "Октябрь",
+            "Nov" => "Ноябрь",
+            "Dec" => "Декбрь"
+        );
+        $months = date('M', strtotime($date));
+        $newDate = str_replace($months, $monthsList[$months], $date);
+        return $newDate;
     }
 
     protected abstract static function getTableName(): string;

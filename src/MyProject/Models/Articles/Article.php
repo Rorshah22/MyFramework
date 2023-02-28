@@ -2,6 +2,8 @@
 
 namespace MyProject\Models\Articles;
 
+use IntlDateFormatter;
+use Locale;
 use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
@@ -21,15 +23,9 @@ class Article extends ActiveRecordEntity
     protected $authorId;
     protected $name;
     protected $text;
-    protected $createdAt;
 
-    /**
-     * @return mixed
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
+
+
 
     public function getName(): string
     {
