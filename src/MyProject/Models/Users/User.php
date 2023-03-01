@@ -9,6 +9,7 @@ class User extends ActiveRecordEntity
 {
     protected $nickname;
     protected $email;
+    protected $img;
     protected $isConfirmed;
     protected $role;
     protected $passwordHash;
@@ -29,6 +30,21 @@ class User extends ActiveRecordEntity
     public function getEmail(): string
     {
         return $this->email;
+    }
+    /**
+     * @return mixed
+     */
+    public function getImg()
+    {
+        return $this->img;
+    }
+
+    /**
+     * @param mixed $img
+     */
+    public function setImg($img): void
+    {
+        $this->img = $img;
     }
 
     /**

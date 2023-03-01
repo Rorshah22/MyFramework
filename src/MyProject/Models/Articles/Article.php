@@ -2,18 +2,17 @@
 
 namespace MyProject\Models\Articles;
 
-use IntlDateFormatter;
-use Locale;
 use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Models\ActiveRecordEntity;
 use MyProject\Models\Users\User;
-use MyProject\Services\Db;
 
 /**
  * @property int $id
- * @property int $autorId
+ * @property int $authorId
  * @property string $name
  * @property string $text
+ * @property int $themeId
+ * @property int $rating
  * @property string $createdAt
  *
  *
@@ -23,8 +22,9 @@ class Article extends ActiveRecordEntity
     protected $authorId;
     protected $name;
     protected $text;
-
-
+    protected $themeId;
+    protected $rating;
+    protected $img;
 
 
     public function getName(): string
@@ -45,6 +45,32 @@ class Article extends ActiveRecordEntity
     public function setText(string $text): void
     {
         $this->text = $text;
+    }
+
+    public function getTheme(): ArticleTheme
+    {
+        return ArticleTheme::getByID($this->themeId);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param mixed $rating
+     */
+    public function setRating($rating): void
+    {
+        $this->rating = $rating;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
     }
 
     public function getAuthorId(): int
@@ -95,10 +121,8 @@ class Article extends ActiveRecordEntity
         return $this;
     }
 
-    protected
-    static function getTableName(): string
+    protected static function getTableName(): string
     {
         return 'articles';
     }
-
 }

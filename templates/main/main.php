@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var MyProject\Models\Articles\Article[] $articles ;
  * @var MyProject\Models\Articles\Article $article ;
@@ -12,16 +13,18 @@
             break;
         } ?>
         <div class="card-img">
-            <p class="card-theme">Theme</p>
+
+            <p class="card-theme"><?= $article->getTheme()->getName()?></p>
             <div class="profile-data">
-                <img src="/../img/no-photo.png" alt="фото профиля" width="40px" height="40px">
+
+                <img src="/../img/profiles_photo/<?= $article->getAuthor()->getImg() ?? 'no-photo.png'?>" alt="фото профиля" width="40px" height="40px">
                 <div class="profile-data-info">
                     <p><?= $article->getAuthor()->getNickname() ?></p>
                     <p><?= $article->getCreatedAt() ?></p>
                 </div>
             </div>
             <h2 class="card-h2"><?= $article->getName() ?></h2>
-            <p><img class="card-image-background" src="/../img/news1.png" alt=""></p>
+            <p><img class="card-image-background" src="/../img/<?= $article->getImg()?? ''?>" alt=""></p>
         </div>
         <p class="card-text"><?php if (mb_strlen($article->getText()) < 100): ?>
                 <?= htmlentities($article->getText()) ?>

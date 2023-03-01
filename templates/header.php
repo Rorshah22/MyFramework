@@ -8,11 +8,10 @@
 </head>
 <body class="body">
     <header class="header">
-        <h1 class="header_h1">Мой блог</h1>
+        <h1 class="header_h1">Блог</h1>
         <nav >
             <ul class="nav">
                 <li><a href="/">Главная</a></li>
-                <li><a href="">Новости</a></li>
                 <li><a href="">Категории</a></li>
                 <li><a href="">Контакты</a></li>
                 <li><a href="/admin">Админка</a></li>
