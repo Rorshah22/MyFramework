@@ -11,6 +11,14 @@ use MyProject\Models\Comments\Comment;
 
 class ArticlesController extends AbstractController
 {
+    public function all():void
+    {
+        $articles = Article::findLastRecords(5,'DESC');
+        if ($articles === null){
+            throw new NotFoundException();
+        }
+        $this->view->renderHtml('articles/all.php', ['articles' =>$articles]);
+    }
     public function view(int $articleId): void
     {
         $article = Article::getByID($articleId);

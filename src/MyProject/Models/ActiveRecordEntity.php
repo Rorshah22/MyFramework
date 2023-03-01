@@ -38,16 +38,16 @@ abstract class ActiveRecordEntity
         return $entities ? $entities[0] : null;
     }
 
-    public static function findAll(): array
+    public static function findAll(string $orderId = 'ASC'): array
     {
         $db = Db::getInstance();
         return $db->query(
-            'SELECT* FROM `' . static::getTableName() . '`;',
+            'SELECT* FROM `' . static::getTableName() . '` ORDER BY id ' . $orderId . ';',
             [],
             static::class);
     }
 
-    public static function findLastRecords($limit = 10, $orderId = 'ASC'): array
+    public static function findLastRecords(int $limit = 10, string $orderId = 'ASC'): array
     {
         $db = DB::getInstance();
 
@@ -180,6 +180,12 @@ abstract class ActiveRecordEntity
         $months = date('M', strtotime($date));
         $newDate = str_replace($months, $monthsList[$months], $date);
         return $newDate;
+    }
+    public static function getPagesCount(int $itemsPerPage): int
+    {
+        $db = Db::getInstance();
+        $result = $db->query('SELECT COUNT(*) AS count FROM `'.static::getTableName().'`;');
+        return ceil($result[0]->count / $itemsPerPage);
     }
 
     protected abstract static function getTableName(): string;
