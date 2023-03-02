@@ -55,13 +55,6 @@ abstract class ActiveRecordEntity implements \JsonSerializable
             [],
             static::class);
     }
-    public static function getPageCount(int $itemPerPage):int
-    {
-        $db = Db::getInstance();
-        $result = $db->query('SELECT COUNT(*) AS cnt FROM `'.static::getTableName().'`;');
-        return ceil($result[0]->cnt/$itemPerPage);
-    }
-
     public function save(): void
     {
         $mappedProperties = $this->mapPropertiesToDbFormat();
@@ -71,7 +64,6 @@ abstract class ActiveRecordEntity implements \JsonSerializable
             $this->update($mappedProperties);
         }
     }
-
     private function camelCaseToUnderscore(string $source): string
     {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
@@ -192,6 +184,20 @@ abstract class ActiveRecordEntity implements \JsonSerializable
         $db = Db::getInstance();
         $result = $db->query('SELECT COUNT(*) AS count FROM `'.static::getTableName().'`;');
         return ceil($result[0]->count / $itemsPerPage);
+    }
+    public static function getPage(int $pageNum, int $itemsPerPage):array
+    {
+        $db = Db::getInstance();
+        return $db->query(
+            sprintf(
+                'SELECT * FROM `%s` ORDER BY id DESC LIMIT %d OFFSET %d;',
+                static::getTableName(),
+                $itemsPerPage,
+                ($pageNum - 1) * $itemsPerPage
+            ),
+            [],
+            static::class
+        );
     }
     public function jsonSerialize()
     {

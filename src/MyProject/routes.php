@@ -9,7 +9,7 @@ use \MyProject\Controllers\CommentsController;
 
 return [
     '~^$~' => [MainController::class, 'main'],
-    '~^articles$~' => [ArticlesController::class, 'all'],
+    '~^page/(\d+)$~' => [ArticlesController::class, 'main'],
     '~^articles/(\d+)$~' => [ArticlesController::class, 'view'],
     '~^articles/(\d+)/edit$~' => [ArticlesController::class, 'edit'],
     '~^articles/add~' =>[ArticlesController::class, 'add'],

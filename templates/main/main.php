@@ -52,6 +52,6 @@
 
 <div class="read_more">
     <h3>Хотите читать больше?</h3>
-    <a class="read_more-a" href="/articles">Посетить архив</a>
+    <a class="read_more-a" href="/page/1">Посетить архив</a>
 </div>
 <?php include __DIR__ . '/../footer.php' ?>

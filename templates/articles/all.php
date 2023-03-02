@@ -4,6 +4,7 @@
  * @var MyProject\Models\Articles\Article[] $articles ;
  * @var MyProject\Models\Articles\Article $article ;
  * @var MyProject\Models\Users\User $user ;
+ * @var MyProject\Models\Articles\Article $pagesCount;
  */ ?>
 <?php include __DIR__ . '/../header.php' ?>
 <?php foreach ($articles as $key => $article): ?>
@@ -46,5 +47,10 @@
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
+<div>
+    <?php for ($pageNum = 1; $pageNum <= $pagesCount; $pageNum++):?>
+        <a href="/page/<?= $pageNum === 1 ? '': $pageNum?>"><?= $pageNum?></a>
+    <?php endfor;?>
+</div>
 <?php include __DIR__ . '/../footer.php' ?>
 
