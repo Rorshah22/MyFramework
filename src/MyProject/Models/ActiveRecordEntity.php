@@ -56,6 +56,7 @@ abstract class ActiveRecordEntity implements \JsonSerializable
             static::class);
     }
 
+
     public function save(): void
     {
         $mappedProperties = $this->mapPropertiesToDbFormat();

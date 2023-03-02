@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Мой блог</title>
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/htdocs/css/reset.css">
+    <link rel="stylesheet" href="<?= __DIR__?>/css/main.css">
 </head>
 <body class="body">
     <header class="header">
