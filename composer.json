@@ -1,0 +1,15 @@
+{
+    "name": "khalimon/myproject",
+    "autoload": {
+        "psr-4": {
+            "MyProject\\": "src/MyProject"
+        }
+    },
+    "authors": [
+        {
+            "name": "Siarhei Kahlimon",
+            "email": "hulk145@gmail.com"
+        }
+    ],
+    "require": {}
+}
