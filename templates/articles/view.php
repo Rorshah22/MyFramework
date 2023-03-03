@@ -2,6 +2,7 @@
 /**
  * @var MyProject\Models\Articles\Article $article ;
  * @var MyProject\Models\Users\User $user ;
+ * @var MyProject\Models\Comments\Comment[]  $comments
  * @var MyProject\Models\Comments\Comment $comment;
  */
 include __DIR__ . '/../header.php' ?>
@@ -15,6 +16,7 @@ include __DIR__ . '/../header.php' ?>
 <!--comments-->
 <div>
     <h3>Комментарии:</h3>
+    <?php if ($user !==null):?>
 <p>Оставить комментарий</p>
     <form action="/comments/add" method="post">
         <input type="hidden" name="article_id" value="<?= $article->getId()?>">
@@ -22,6 +24,10 @@ include __DIR__ . '/../header.php' ?>
         <br>
         <input type="submit" value="Отправить">
     </form>
+    <?php else:?>
+    <p>Войдите чтобы оставить комментарий</p>
+        <a href="/users/login">Вход</a>
+    <?php endif;?>
 </div>
 <hr>
 
@@ -31,7 +37,10 @@ include __DIR__ . '/../header.php' ?>
 <div id="comment<?= $comment->getId()?>">
     <p ><?= $comment->getUser()->getNickname()?></p>
     <p><?= $comment->getComment()?> </p>
-    <span><?= $comment->getCreatedAt()?></span>
+    <span><?= $comment->getCreatedAt('m.d.y H:i')?></span>
+    <?php if ($user !== null && ($user->isAdmin() || $user->getId() === $comment->getUser()->getId())):?>
+        <p><a href="/comments/<?= $comment->getId() ?>/edit">Редактировать</a></p>
+    <?php endif; ?>
 </div>
         <?php endif;?>
 

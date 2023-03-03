@@ -11,6 +11,18 @@ use MyProject\Models\Comments\Comment;
 
 class ArticlesController extends AbstractController
 {
+
+    public function main()
+    {
+        $this->page(1);
+    }
+    public function page(int $pageNum)
+    {
+        $this->view->renderHtml('articles/all.php', [
+            'articles' => Article::getPage($pageNum, 5),
+            'pagesCount' => Article::getPagesCount(5),
+        ]);
+    }
     public function view(int $articleId): void
     {
         $article = Article::getByID($articleId);

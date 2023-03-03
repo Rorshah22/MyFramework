@@ -19,5 +19,9 @@ class CommentsController extends AbstractController
         header('Location: /articles/' .  $comment->getArticleId().'#comment'.$comment->getId(), true, 302);
         exit();
     }
+    public function editComment(int $commentId):void
+    {
+        $comment = Comment::getByID($commentId);
+    }
 
 }

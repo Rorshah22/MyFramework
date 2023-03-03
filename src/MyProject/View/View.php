@@ -25,12 +25,18 @@ class View
         extract($vars);
         extract($this->extraVars);
         http_response_code($code);
-
         ob_start();
         include $this->templatesPath . '/' . $templateName;
         $buffer = ob_get_contents();
         ob_end_clean();
 
         echo $buffer;
+    }
+
+    public function displayJson($data, int $code = 200)
+    {
+        header('Content-type: application/json; charset=utf-8');
+        http_response_code($code);
+        echo json_encode($data);
     }
 }

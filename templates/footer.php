@@ -1,17 +1,25 @@
-</td>
 
-<td width="300px" class="sidebar">
-    <div class="sidebarHeader">Меню</div>
-    <ul>
-        <li><a href="/">Главная страница</a></li>
-        <li><a href="/about-me">Обо мне</a></li>
-    </ul>
-</td>
-</tr>
-<tr>
-    <td class="footer" colspan="2">Все права защищены (c) Мой блог</td>
-</tr>
-</table>
+</main>
+<footer class="footer">
+    <div>
+        <p>Лучшие новости</p>
+    </div>
+    <div class="preview">
+        <figure>
+            <p><img src="/../img/Frame.png" alt="картинка"></p>
+            <figcaption>описание</figcaption>
+        </figure>
+        <figure>
+            <p><img src="/../img/Frame2.png" alt="картинка"></p>
+            <figcaption>описание</figcaption>
+        </figure>
+        <figure>
+            <p><img src="/../img/Frame3.png" alt="картинка"></p>
+            <figcaption>описание</figcaption>
+        </figure>
+    </div>
+    <p>Все права защищены © <a href="">Халимон Сергей</a></p>
+</footer>
 
 </body>
 </html>

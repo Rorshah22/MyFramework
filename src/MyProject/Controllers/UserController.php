@@ -11,7 +11,7 @@ use MyProject\Services\EmailSender;
 
 class UserController extends AbstractController
 {
-    public function signUp():void
+    public function signUp(): void
     {
         if (!empty($_POST)) {
             try {
@@ -35,7 +35,8 @@ class UserController extends AbstractController
         $this->view->renderHtml('users/signUp.php');
 
     }
-    public function activate(int $userId, string $activationCode):void
+
+    public function activate(int $userId, string $activationCode): void
     {
 
         try {
@@ -63,9 +64,10 @@ class UserController extends AbstractController
             $this->view->renderHtml('users/signUp.php', ['error' => $e->getMessage()]);
         }
     }
-    public function login():void
+
+    public function login(): void
     {
-        if (!empty($_POST)){
+        if (!empty($_POST)) {
             try {
                 $user = User::login($_POST);
                 UsersAuthService::createToken($user);
@@ -78,7 +80,8 @@ class UserController extends AbstractController
         }
         $this->view->renderHtml('users/login.php');
     }
-    public function logout():void
+
+    public function logout(): void
     {
         User::logout();
         header('Location: /');

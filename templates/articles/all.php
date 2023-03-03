@@ -4,14 +4,12 @@
  * @var MyProject\Models\Articles\Article[] $articles ;
  * @var MyProject\Models\Articles\Article $article ;
  * @var MyProject\Models\Users\User $user ;
+ * @var MyProject\Models\Articles\Article $pagesCount;
  */ ?>
 <?php include __DIR__ . '/../header.php' ?>
-
 <?php foreach ($articles as $key => $article): ?>
     <div class="card">
-        <?php if ($key === 3) {
-            break;
-        } ?>
+
         <div class="card-img">
 
             <p class="card-theme"><?= $article->getTheme()->getName()?></p>
@@ -24,7 +22,7 @@
                 </div>
             </div>
             <h2 class="card-h2"><?= $article->getName() ?></h2>
-            <p><img class="card-image-background" src="/../img/<?= $article->getImg()?? ''?>" alt=""></p>
+            <p><img class="card-image-background" src="/../img/<?= $article->getImg()?? 'no-photo.png'?>" alt="" width="800px" height="330px"></p>
         </div>
         <p class="card-text"><?php if (mb_strlen($article->getText()) < 100): ?>
                 <?= htmlentities($article->getText()) ?>
@@ -36,7 +34,7 @@
                 <span class="arrow-1">
                 <span></span>
             </span>
-        </a>
+            </a>
 
         </p>
 
@@ -49,9 +47,10 @@
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
-
-<div class="read_more">
-    <h3>Хотите читать больше?</h3>
-    <a class="read_more-a" href="/page/1">Посетить архив</a>
+<div>
+    <?php for ($pageNum = 1; $pageNum <= $pagesCount; $pageNum++):?>
+        <a href="/page/<?= $pageNum === 1 ? '': $pageNum?>"><?= $pageNum?></a>
+    <?php endfor;?>
 </div>
 <?php include __DIR__ . '/../footer.php' ?>
+

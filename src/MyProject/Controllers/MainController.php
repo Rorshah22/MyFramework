@@ -10,8 +10,9 @@ class MainController extends AbstractController
 {
     public function main()
     {
-        $articles  = Article::findAll();
-        $this->view->renderHtml('main/main.php', ['articles' => $articles]);
+        $articles  = Article::findLastRecords(3 , 'DESC');
+        $this->view->renderHtml('main/main.php',
+            ['articles' => $articles]);
     }
 
 }

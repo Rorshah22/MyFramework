@@ -4,9 +4,11 @@ namespace MyProject\Models;
 
 use MyProject\Services\Db;
 
-abstract class ActiveRecordEntity
+abstract class ActiveRecordEntity implements \JsonSerializable
 {
     protected $id;
+    protected $createdAt;
+
     /**
      * @return mixed
      */
@@ -36,15 +38,23 @@ abstract class ActiveRecordEntity
         return $entities ? $entities[0] : null;
     }
 
-    public static function findAll(): array
+    public static function findAll(string $orderId = 'ASC'): array
     {
         $db = Db::getInstance();
         return $db->query(
-            'SELECT* FROM `' . static::getTableName() . '`;',
+            'SELECT* FROM `' . static::getTableName() . '` ORDER BY id ' . $orderId . ';',
             [],
             static::class);
     }
 
+    public static function findLastRecords(int $limit = 10, string $orderId = 'ASC'): array
+    {
+        $db = DB::getInstance();
+
+        return $db->query('SELECT * FROM `' . static::getTableName() . '` ORDER BY id ' . $orderId . ' LIMIT ' . $limit,
+            [],
+            static::class);
+    }
     public function save(): void
     {
         $mappedProperties = $this->mapPropertiesToDbFormat();
@@ -54,7 +64,6 @@ abstract class ActiveRecordEntity
             $this->update($mappedProperties);
         }
     }
-
     private function camelCaseToUnderscore(string $source): string
     {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
@@ -135,10 +144,64 @@ abstract class ActiveRecordEntity
         $result = $db->query('SELECT * FROM `' . static::getTableName() . '` WHERE ' . $columnName . '= :value',
             [':value' => $value],
             static::class);
-        if ($result === []){
+        if ($result === []) {
             return null;
         }
         return $result[0];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt(string $format = 'M d, Y')
+    {
+        $date = new \DateTimeImmutable($this->createdAt);
+        return $this->formatDate($date->format($format));
+    }
+
+    private function formatDate($date): string
+    {
+        $monthsList = array(
+            "Jan" => "Январь",
+            "Feb" => "Февраль",
+            "Mar" => "Март",
+            "Apr" => "Апрель",
+            "May" => "Мая",
+            "Jun" => "Июнь",
+            "Jul" => "Июль",
+            "Aug" => "Август",
+            "Sep" => "Сентябрь",
+            "Oct" => "Октябрь",
+            "Nov" => "Ноябрь",
+            "Dec" => "Декбрь"
+        );
+        $months = date('M', strtotime($date));
+        $newDate = str_replace($months, $monthsList[$months], $date);
+        return $newDate;
+    }
+    public static function getPagesCount(int $itemsPerPage): int
+    {
+        $db = Db::getInstance();
+        $result = $db->query('SELECT COUNT(*) AS count FROM `'.static::getTableName().'`;');
+        return ceil($result[0]->count / $itemsPerPage);
+    }
+    public static function getPage(int $pageNum, int $itemsPerPage):array
+    {
+        $db = Db::getInstance();
+        return $db->query(
+            sprintf(
+                'SELECT * FROM `%s` ORDER BY id DESC LIMIT %d OFFSET %d;',
+                static::getTableName(),
+                $itemsPerPage,
+                ($pageNum - 1) * $itemsPerPage
+            ),
+            [],
+            static::class
+        );
+    }
+    public function jsonSerialize()
+    {
+        return $this->mapPropertiesToDbFormat();
     }
 
     protected abstract static function getTableName(): string;

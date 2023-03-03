@@ -2,12 +2,13 @@
 
 use MyProject\Exceptions\Forbidden;
 
-spl_autoload_register(function (string $className) {
-    $className = '/../src/' . str_ireplace('\\', '/', $className) . '.php';
-    require_once __DIR__ . $className;
-});
-try{
+//spl_autoload_register(function (string $className) {
+//    $className = '/../src/' . str_ireplace('\\', '/', $className) . '.php';
+//    require_once __DIR__ . $className;
+//});
+require __DIR__.'/../vendor/autoload.php';
 
+try{
 $route = $_GET['route'] ?? '';
 $routes = require_once __DIR__ . '/../src/MyProject/routes.php';
 
