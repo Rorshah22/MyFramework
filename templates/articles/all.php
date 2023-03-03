@@ -4,7 +4,8 @@
  * @var MyProject\Models\Articles\Article[] $articles ;
  * @var MyProject\Models\Articles\Article $article ;
  * @var MyProject\Models\Users\User $user ;
- * @var MyProject\Models\Articles\Article $pagesCount;
+ * @var MyProject\Models\Articles\Article $pagesCount ;
+ * @var MyProject\Models\Articles\Article $currentPage ;
  */ ?>
 <?php include __DIR__ . '/../header.php' ?>
 <?php foreach ($articles as $key => $article): ?>
@@ -12,17 +13,19 @@
 
         <div class="card-img">
 
-            <p class="card-theme"><?= $article->getTheme()->getName()?></p>
+            <p class="card-theme"><?= $article->getTheme()->getName() ?></p>
             <div class="profile-data">
 
-                <img src="/../img/profiles_photo/<?= $article->getAuthor()->getImg() ?? 'no-photo.png'?>" alt="фото профиля" width="40px" height="40px">
+                <img src="/../img/profiles_photo/<?= $article->getAuthor()?->getImg() ?? 'no-photo.png' ?>"
+                     alt="фото профиля" width="40px" height="40px">
                 <div class="profile-data-info">
-                    <p><?= $article->getAuthor()->getNickname() ?></p>
+                    <p><?= $article->getAuthor()?->getNickname() ?></p>
                     <p><?= $article->getCreatedAt() ?></p>
                 </div>
             </div>
             <h2 class="card-h2"><?= $article->getName() ?></h2>
-            <p><img class="card-image-background" src="/../img/<?= $article->getImg()?? 'no-photo.png'?>" alt="" width="800px" height="330px"></p>
+            <p><img class="card-image-background" src="/../img/<?= $article->getImg() ?? 'no-photo.png' ?>" alt=""
+                    width="800px" height="330px"></p>
         </div>
         <p class="card-text"><?php if (mb_strlen($article->getText()) < 100): ?>
                 <?= htmlentities($article->getText()) ?>
@@ -47,10 +50,6 @@
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
-<div>
-    <?php for ($pageNum = 1; $pageNum <= $pagesCount; $pageNum++):?>
-        <a href="/page/<?= $pageNum === 1 ? '': $pageNum?>"><?= $pageNum?></a>
-    <?php endfor;?>
-</div>
+<?php include __DIR__ . '/../paginate/paginate.php';?>
 <?php include __DIR__ . '/../footer.php' ?>
 

@@ -12,15 +12,22 @@ use MyProject\Models\Comments\Comment;
 class ArticlesController extends AbstractController
 {
 
-    public function main()
+    public function main(int $pageNum)
     {
-        $this->page(1);
+
+        $this->page( $pageNum);
     }
     public function page(int $pageNum)
     {
+        $articles =  Article::getPage($pageNum, 5);
+        if ( empty($articles)){
+            throw new NotFoundException();
+        }
         $this->view->renderHtml('articles/all.php', [
-            'articles' => Article::getPage($pageNum, 5),
+            'articles' =>$articles,
             'pagesCount' => Article::getPagesCount(5),
+            'currentPage' => $pageNum,
+            'link' => '/page'
         ]);
     }
     public function view(int $articleId): void

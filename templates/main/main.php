@@ -9,9 +9,7 @@
 
 <?php foreach ($articles as $key => $article): ?>
     <div class="card">
-        <?php if ($key === 3) {
-            break;
-        } ?>
+
         <div class="card-img">
 
             <p class="card-theme"><?= $article->getTheme()->getName()?></p>
@@ -24,7 +22,9 @@
                 </div>
             </div>
             <h2 class="card-h2"><?= $article->getName() ?></h2>
-            <p><img class="card-image-background" src="/../img/<?= $article->getImg()?? ''?>" alt=""></p>
+            <p><img class="card-image-background"
+                    src="/../img/<?= $article->getImg()?? 'no-photo.png'?>"
+                    alt="" width="800px" height="330px">
         </div>
         <p class="card-text"><?php if (mb_strlen($article->getText()) < 100): ?>
                 <?= htmlentities($article->getText()) ?>
@@ -36,7 +36,7 @@
                 <span class="arrow-1">
                 <span></span>
             </span>
-        </a>
+            </a>
 
         </p>
 
@@ -44,14 +44,12 @@
             <p class="card-edit"><a class="card-edit-btn"
                                     href="/articles/<?= $article->getId() ?>/edit">Редактировать</a></p>
         <?php endif; ?>
-        <?php if (count($articles) - 1 !== $key): ?>
 
-        <?php endif; ?>
     </div>
 <?php endforeach; ?>
 
 <div class="read_more">
     <h3>Хотите читать больше?</h3>
-    <a class="read_more-a" href="/page/1">Посетить архив</a>
+    <a class="read_more-a" href="/page=1">Посетить архив</a>
 </div>
 <?php include __DIR__ . '/../footer.php' ?>

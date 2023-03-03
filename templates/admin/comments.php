@@ -13,4 +13,5 @@
     <hr>
 </div>
 <?php endforeach;?>
+<?php include __DIR__.'/../paginate/paginate.php'?>
 <?php include __DIR__.'/../footer.php'?>
