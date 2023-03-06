@@ -74,6 +74,9 @@ class User extends ActiveRecordEntity
         if (static::findOneByColumn('nickname', $userData['nickname'])) {
             throw new InvalidArgumentException('Пользователь с таким nickname уже существует');
         }
+        if (mb_strlen($userData['nickname']) >127) {
+            throw new InvalidArgumentException('Сличшом длинный nickname');
+        }
         if (empty($userData['email'])) {
             throw new InvalidArgumentException('Не передан email');
         }
@@ -93,6 +96,9 @@ class User extends ActiveRecordEntity
             throw new InvalidArgumentException('Пароль должен быть не менее 8 символов');
         }
 
+        if (mb_strlen($userData['password']) >30) {
+            throw new InvalidArgumentException('Сличшом длинный пароль');
+        }
         $user = new User();
         $user->nickname = $userData['nickname'];
         $user->email = $userData['email'];

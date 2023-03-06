@@ -47,14 +47,6 @@ abstract class ActiveRecordEntity implements \JsonSerializable
             static::class);
     }
 
-    public static function findLastRecords(int $limit = 10, string $orderId = 'ASC'): array
-    {
-        $db = DB::getInstance();
-
-        return $db->query('SELECT * FROM `' . static::getTableName() . '` ORDER BY id ' . $orderId . ' LIMIT ' . $limit,
-            [],
-            static::class);
-    }
     public function save(): void
     {
         $mappedProperties = $this->mapPropertiesToDbFormat();

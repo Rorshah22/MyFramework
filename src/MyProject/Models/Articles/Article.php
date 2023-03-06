@@ -83,7 +83,7 @@ class Article extends ActiveRecordEntity
         $this->authorId = $author->getId();
     }
 
-    public function getAuthor(): User
+    public function getAuthor(): ?User
     {
         return User::getByID($this->authorId);
     }
@@ -96,6 +96,9 @@ class Article extends ActiveRecordEntity
 
         if (empty($fields['text'])) {
             throw new InvalidArgumentException('Не передан текст статьи');
+        }
+        if (mb_strlen($fields['text']) > 10000){
+            throw new InvalidArgumentException('Передано большое количество символов '.mb_strlen($fields['text']));
         }
         $article = new Article();
         $article->setName($fields['name']);
@@ -113,6 +116,9 @@ class Article extends ActiveRecordEntity
 
         if (empty($fields['text'])) {
             throw new InvalidArgumentException('Не передан текст статьи');
+        }
+        if (mb_strlen($fields['text']) > 10000){
+            throw new InvalidArgumentException('Передано большое количество символов '.mb_strlen($fields['text']));
         }
         $this->setName($fields['name']);
         $this->setText($fields['text']);

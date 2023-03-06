@@ -13,6 +13,7 @@ try {
             break;
         }
     }
+
     if (!$isRouteFound) {
         throw new \MyProject\Exceptions\NotFoundException('Route not found');
     }

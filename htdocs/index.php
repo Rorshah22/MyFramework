@@ -15,11 +15,13 @@ $routes = require_once __DIR__ . '/../src/MyProject/routes.php';
 $isRouteFound = false;
 foreach ($routes as $pattern => $controllerAndAction) {
     preg_match($pattern, $route, $matches);
+
     if (!empty($matches)) {
         $isRouteFound = true;
         break;
     }
 }
+
 
 if (!$isRouteFound) {
     throw new \MyProject\Exceptions\NotFoundException();
