@@ -1,14 +1,14 @@
-<?php
-
-/**
- * @var MyProject\Models\Articles\Article[] $articles ;
- * @var MyProject\Models\Articles\Article $article ;
- * @var MyProject\Models\Users\User $user ;
- * @var MyProject\Models\Articles\Article $pagesCount ;
- * @var MyProject\Models\Articles\Article $currentPage ;
- */ ?>
+<?php ///**
+//* @var MyProject\Models\Articles\Article[] $articles ;
+//* @var MyProject\Models\Articles\Article $article ;
+//* @var MyProject\Models\Users\User $user ;
+//* @var MyProject\Models\Articles\Article $pagesCount ;
+//* @var MyProject\Models\Articles\Article $currentPage ;
+//*/ ?>
 <?php include __DIR__ . '/../header.php'; ?>
-<?php foreach ($articles as $key => $article): ?>
+<?php
+//var_dump($articles);
+foreach ($articles as $key => $article): ?>
     <div class="card">
 
         <div class="card-img">
@@ -50,6 +50,5 @@
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
-<?php include __DIR__ . '/../paginate/paginate.php';?>
-<?php include __DIR__ . '/../footer.php' ?>
-
+<?php //include __DIR__ . '/../paginate/paginate.php';?>
+<?php include  __DIR__.'/../footer.php'?>

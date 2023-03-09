@@ -38,6 +38,16 @@ abstract class ActiveRecordEntity implements \JsonSerializable
         return $entities ? $entities[0] : null;
     }
 
+    public static function filter(string $filter, int $id)
+    {
+        $db = Db::getInstance();
+       return $db->query('SELECT * FROM `'.static::getTableName() .'` WHERE '.$filter.'=:filter;',
+            [':filter' => $id],
+            static::class
+            );
+
+    }
+
     public static function findAll(string $orderId = 'ASC'): array
     {
         $db = Db::getInstance();
@@ -56,6 +66,7 @@ abstract class ActiveRecordEntity implements \JsonSerializable
             $this->update($mappedProperties);
         }
     }
+
     private function camelCaseToUnderscore(string $source): string
     {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $source));
@@ -171,13 +182,15 @@ abstract class ActiveRecordEntity implements \JsonSerializable
         $newDate = str_replace($months, $monthsList[$months], $date);
         return $newDate;
     }
+
     public static function getPagesCount(int $itemsPerPage): int
     {
         $db = Db::getInstance();
-        $result = $db->query('SELECT COUNT(*) AS count FROM `'.static::getTableName().'`;');
+        $result = $db->query('SELECT COUNT(*) AS count FROM `' . static::getTableName() . '`;');
         return ceil($result[0]->count / $itemsPerPage);
     }
-    public static function getPage(int $pageNum, int $itemsPerPage):array
+
+    public static function getPage(int $pageNum, int $itemsPerPage): array
     {
         $db = Db::getInstance();
         return $db->query(
@@ -191,6 +204,7 @@ abstract class ActiveRecordEntity implements \JsonSerializable
             static::class
         );
     }
+
     public function jsonSerialize()
     {
         return $this->mapPropertiesToDbFormat();

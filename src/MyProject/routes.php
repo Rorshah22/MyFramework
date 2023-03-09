@@ -14,6 +14,7 @@ return [
     '~^articles/(\d+)/edit$~' => [ArticlesController::class, 'edit'],
     '~^articles/add~' =>[ArticlesController::class, 'add'],
     '~^articles/(\d+)/delete~' =>[ArticlesController::class, 'delete'],
+    '~^articles/category/(\d+)$~' => [ArticlesController::class, 'getArticlesByTheme'],
     '~^comments/add$~' => [CommentsController::class, 'addComment'],
     '~^comments/(\d+)/edit$~' => [CommentsController::class, 'editComment'],
     '~^users/register$~' => [UserController::class, 'signUp'],

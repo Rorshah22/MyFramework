@@ -15,7 +15,7 @@ include __DIR__ . '/../header.php' ?>
         <div class="profile-data">
 
             <img src="/../img/profiles_photo/<?= $article->getAuthor()->getImg() ?? 'no-photo.png' ?>"
-                 alt="фото профиля" width="40px" height="40px">
+                 alt="фото профиля" width="50px" height="50px">
             <div class="profile-data-info">
                 <p><?= $article->getAuthor()->getNickname() ?></p>
                 <p><?= $article->getCreatedAt() ?></p>
