@@ -2,9 +2,9 @@
 
 return [
     'db' =>[
-        'host' => 'localhost', //'172.16.238.12'
+        'host' => '172.16.238.12', //'172.16.238.12'
         'dbname' => 'my_project',
         'users' => 'root',
-        'password' => 'root'
+        'password' => ''
     ]
 ];

@@ -1,18 +1,17 @@
 <?php include __DIR__.'/../header.php';?>
 
-<div style="text-align: center;">
-    <h2>Регистрация</h2>
+<div class="registry" >
+    <h2 class="registry-h2"   >Регистрация</h2>
     <?php if(!empty($error)):?>
-    <p style="background-color: red;padding: 5px;margin: 15px"> <?= $error?></p>
+    <p class="error"> <?= $error?></p>
        <?php endif;?>
-    <form action="/users/register" method="post">
-        <form action="/users/register" method="post">
-            <label>Nickname <input type="text" name="nickname" value="<?= $_POST['nickname']??''?>"></label>
-            <br><br>
-            <label>Email <input type="email" name="email" value="<?= $_POST['email']??''?>"></label>
-            <br><br>
-            <label>Пароль <input type="password" name="password" value="<?= $_POST['password']??''?>"></label>
-            <br><br>
+    <form class="registry-form" action="/users/register" method="post">
+            <label class="registry-text" >Nickname </label>
+        <input type="text" name="nickname" value="<?= $_POST['nickname']??''?>">
+            <label class="registry-email">Email </label>
+        <input type="email" name="email" value="<?= $_POST['email']??''?>">
+            <label class="registry-password"    >Пароль </label>
+        <input type="password" name="password" value="<?= $_POST['password']??''?>">
             <input type="submit" value="Зарегистрироваться">
     </form>
 </div>

@@ -1,10 +1,10 @@
-<?php ///**
-//* @var MyProject\Models\Articles\Article[] $articles ;
-//* @var MyProject\Models\Articles\Article $article ;
-//* @var MyProject\Models\Users\User $user ;
-//* @var MyProject\Models\Articles\Article $pagesCount ;
-//* @var MyProject\Models\Articles\Article $currentPage ;
-//*/ ?>
+<?php /**
+* @var MyProject\Models\Articles\Article[] $articles ;
+* @var MyProject\Models\Articles\Article $article ;
+* @var MyProject\Models\Users\User $user ;
+* @var MyProject\Models\Articles\Article $pagesCount ;
+* @var MyProject\Models\Articles\Article $currentPage ;
+*/ ?>
 <?php include __DIR__ . '/../header.php'; ?>
 <?php
 //var_dump($articles);
