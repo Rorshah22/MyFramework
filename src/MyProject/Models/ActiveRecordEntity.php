@@ -38,11 +38,11 @@ abstract class ActiveRecordEntity implements \JsonSerializable
         return $entities ? $entities[0] : null;
     }
 
-    public static function filter(string $filter, int $id)
+    public static function filter(string $key, int $value)
     {
         $db = Db::getInstance();
-       return $db->query('SELECT * FROM `'.static::getTableName() .'` WHERE '.$filter.'=:filter;',
-            [':filter' => $id],
+       return $db->query('SELECT * FROM `'.static::getTableName() .'` WHERE '.$key.'=:value;',
+            ['value' => $value],
             static::class
             );
 

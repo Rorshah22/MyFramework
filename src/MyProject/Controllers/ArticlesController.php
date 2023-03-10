@@ -99,6 +99,10 @@ class ArticlesController extends AbstractController
     {
         $articles =  Article::filter('theme_id',$idTheme);
         $comments = Comment::findAll();
-        $this->view->renderHtml('articles/category.php', ['articles' => $articles,'comments' => $comments]);
+        $this->view->renderHtml('articles/category.php',
+            [
+                'articles' => $articles,
+                'comments' => $comments,
+            ]);
     }
 }

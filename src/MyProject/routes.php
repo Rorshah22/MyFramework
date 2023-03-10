@@ -24,4 +24,5 @@ return [
     '~^admin$~' => [AdminController::class, 'view'],
     '~^admin/articles/page=(\d+)$~' => [AdminController::class, 'articlesView'],
     '~^admin/comments/page=(\d+)$~' => [AdminController::class, 'commentsView'],
+    '~^parser$~' => [\MyProject\Controllers\ParserController::class, 'parse'],
 ];
