@@ -11,5 +11,10 @@
             "email": "hulk145@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+  "require": {
+    "ext-pdo": "*"
+  }
 }
