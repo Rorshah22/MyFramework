@@ -24,6 +24,11 @@ class User extends ActiveRecordEntity
         return $this->nickname;
     }
 
+    public function setNickName(string $nickName): void
+    {
+        $this->nickname = $nickName;
+    }
+
     /**
      * @return string
      */
@@ -31,6 +36,7 @@ class User extends ActiveRecordEntity
     {
         return $this->email;
     }
+
     /**
      * @return mixed
      */
@@ -42,7 +48,7 @@ class User extends ActiveRecordEntity
     /**
      * @param mixed $img
      */
-    public function setImg($img): void
+    public function setImg(string $img): void
     {
         $this->img = $img;
     }
@@ -63,20 +69,13 @@ class User extends ActiveRecordEntity
         return $this->authToken;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public static function signUp(array $userData): User
     {
-        if (empty($userData['nickname'])) {
-            throw new InvalidArgumentException('Не передан nickname');
-        }
-        if (!preg_match('/^[a-zA-Z0-9]+$/', $userData['nickname'])) {
-            throw new InvalidArgumentException('Nickname может состоять только из символов латинского алфавита и цифр');
-        }
-        if (static::findOneByColumn('nickname', $userData['nickname'])) {
-            throw new InvalidArgumentException('Пользователь с таким nickname уже существует');
-        }
-        if (mb_strlen($userData['nickname']) >127) {
-            throw new InvalidArgumentException('Сличшом длинный nickname');
-        }
+        self::validateNickname($userData['nickname']);
+
         if (empty($userData['email'])) {
             throw new InvalidArgumentException('Не передан email');
         }
@@ -96,7 +95,7 @@ class User extends ActiveRecordEntity
             throw new InvalidArgumentException('Пароль должен быть не менее 8 символов');
         }
 
-        if (mb_strlen($userData['password']) >30) {
+        if (mb_strlen($userData['password']) > 30) {
             throw new InvalidArgumentException('Сличшом длинный пароль');
         }
         $user = new User();
@@ -146,7 +145,8 @@ class User extends ActiveRecordEntity
         $user->save();
         return $user;
     }
-    public function isAdmin():bool
+
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
@@ -164,6 +164,32 @@ class User extends ActiveRecordEntity
     public function isConfirmed()
     {
         return $this->isConfirmed;
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public static function profile(User $user, string $nickName): void
+    {
+        self::validateNickname($nickName);
+        $user->setNickName($nickName);
+        $user->save();
+    }
+
+    private static function validateNickname(string $nickName)
+    {
+        if (empty($nickName)) {
+            throw new InvalidArgumentException('Не передан nickname');
+        }
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $nickName)) {
+            throw new InvalidArgumentException('Nickname может состоять только из символов латинского алфавита и цифр');
+        }
+        if (static::findOneByColumn('nickname', $nickName)) {
+            throw new InvalidArgumentException('Пользователь с таким nickname уже существует');
+        }
+        if (mb_strlen($nickName) > 127) {
+            throw new InvalidArgumentException('Слишком длинный nickname');
+        }
     }
 
     protected static function getTableName(): string

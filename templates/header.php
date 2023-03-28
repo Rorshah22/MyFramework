@@ -24,7 +24,7 @@
                 <li><a class="nav-item" href="">Контакты</a></li>
                 <li><a class="nav-item" href="/admin">Админка</a></li>
                 <li><?php if (!empty($user)): ?>
-                        <a class="nav-item" href=""><?= $user->getNickname() ?></a>
+                        <a class="nav-item" href="/users/profile"><?= $user->getNickname() ?></a>
                         <span>|</span>
                         <a class="nav-item" href="/users/logout">Выйти</a>
                 <?php else: ?>

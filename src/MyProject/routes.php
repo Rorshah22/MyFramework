@@ -21,6 +21,7 @@ return [
     '~^users/(\d+)/activate/(.+)$~' => [UserController::class, 'activate'],
     '~^users/login$~' => [UserController::class, 'login'],
     '~^users/logout$~' => [UserController::class, 'logout'],
+    '~^users/profile$~' => [UserController::class, 'profile'],
     '~^admin$~' => [AdminController::class, 'view'],
     '~^admin/articles/page=(\d+)$~' => [AdminController::class, 'articlesView'],
     '~^admin/comments/page=(\d+)$~' => [AdminController::class, 'commentsView'],

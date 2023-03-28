@@ -86,4 +86,18 @@ class UserController extends AbstractController
         User::logout();
         header('Location: /');
     }
+
+    public function profile(): void
+    {
+        if (!empty($_POST)) {
+            try {
+                User::profile($this->user, $_POST['edit_login']);
+            } catch (InvalidArgumentException $e) {
+                $this->view->renderHtml('users/profile.php', ['error'=>$e->getMessage() ]);
+                return;
+            }
+
+        }
+        $this->view->renderHtml('users/profile.php');
+    }
 }
