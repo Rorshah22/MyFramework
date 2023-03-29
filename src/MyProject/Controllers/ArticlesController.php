@@ -7,6 +7,7 @@ use MyProject\Exceptions\InvalidArgumentException;
 use MyProject\Exceptions\NotFoundException;
 use MyProject\Exceptions\UnauthorizedException;
 use MyProject\Models\Articles\Article;
+use MyProject\Models\Articles\ArticleTheme;
 use MyProject\Models\Comments\Comment;
 
 class ArticlesController extends AbstractController
@@ -92,5 +93,16 @@ class ArticlesController extends AbstractController
     {
         $article = Article::getByID($articleId);
         $article->delete();
+    }
+
+    public function getArticlesByTheme(int $idTheme): void
+    {
+        $articles =  Article::filter('theme_id',$idTheme);
+        $comments = Comment::findAll();
+        $this->view->renderHtml('articles/category.php',
+            [
+                'articles' => $articles,
+                'comments' => $comments,
+            ]);
     }
 }

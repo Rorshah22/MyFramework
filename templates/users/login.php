@@ -1,14 +1,17 @@
 <?php include __DIR__.'/../header.php';?>
-<h2>Введите данные для входа</h2>
+<div class="login"  >
+
+
+<h2 class="login-h2"   >Введите данные для входа</h2>
 <?php if (!empty($error)):?>
-    <p style="background-color: red; margin: 15px;padding: 5px;"><?= $error?></p>
+    <p class="error" ><?= $error?></p>
 <?php endif;?>
-<form action="/users/login" method="post">
-    <label for="email">Email:</label>
+<form class="login-form" action="/users/login" method="post">
+    <label class="login-email" for="email">Email:</label>
     <input type="email" name="email" id="email" value="<?=$_POST['email'] ?? ''?>">
-    <br><br>
-    <label for="password">Пароль:</label>
+    <label class="login-password" for="password">Пароль:</label>
     <input type="password" name="password" id="password" value="<?=$_POST['password'] ?? ''?>">
     <input type="submit" value="Вход">
 </form>
+</div>
 <?php include __DIR__.'/../footer.php';?>

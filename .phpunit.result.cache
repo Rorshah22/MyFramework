@@ -1,0 +1,1 @@
+{"version":1,"defects":{"tests\\DatabaseTest::testQueryReturnsNullOnInvalidSql":3,"tests\\DatabaseTest::testQueryReturnsNullOnNoResults":4},"times":{"tests\\DatabaseTest::testQueryReturnsNullOnInvalidSql":0.001,"tests\\DatabaseTest::testQueryReturnsDataWithoutParams":0.001,"tests\\DatabaseTest::testQueryReturnsNullOnNoResults":0,"tests\\DatabaseTest::testQueryReturnsData":0.015}}
